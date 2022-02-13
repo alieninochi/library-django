@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Config') {
+            steps {
+                sh 'cd ./project/terraform'
+                sh 'sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl'
+                sh 'curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -'
+                sh 'sudo apt-get update && sudo apt-get install terraform'
+                sh 'terraform init'
+                sh 'terraform apply'
+                echo 'Hello world!'
+            }
+        }
+    }
+}
