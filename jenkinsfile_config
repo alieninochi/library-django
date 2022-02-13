@@ -5,7 +5,7 @@ pipeline {
         stage('Config') {
             steps {
                 sh 'cd ./terraform'
-                sh 'ls -alt'
+                sh 'ls -alt ./terraform'
                 sh 'terraform init'
                 sh 'terraform apply -auto-approve'
                 echo 'Hello world!'
