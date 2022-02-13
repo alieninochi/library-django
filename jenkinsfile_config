@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sh 'cd ./terraform'
                 sh 'terraform init'
-                sh 'terraform apply'
+                sh 'terraform apply -auto-approve'
                 echo 'Hello world!'
             }
         }
