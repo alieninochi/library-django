@@ -4,11 +4,14 @@ pipeline {
     stages {
         stage('Config') {
             steps {
-                sh 'cd ./terraform'
                 dir('terraform') {
                     sh 'ls -alt'
                     sh 'terraform init'
                     sh 'terraform apply -auto-approve'
+                    sh 'terraform output | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > ../ansible/hosts.txt'
+                    sh 'cat ../ansible/hosts.txt'
+                    sh 'export IP_ADDR=$(cat ../ansible/hosts.txt)'
+                    sh 'echo $IP_ADDR'
                 }
                 echo 'Hello world!'
             }

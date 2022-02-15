@@ -15,16 +15,6 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-resource "aws_subnet" "ws_subnet" {
-  vpc_id = aws_vpc.vpc_for_web.id
-  cidr_block = "10.0.100.0/24"
-  map_public_ip_on_launch = true
-
-  tags = {
-    name = "public subnet for web server"
-  }
-}
-
 resource "aws_route_table" "web_route" {
   vpc_id = aws_vpc.vpc_for_web.id
   route {
@@ -35,4 +25,20 @@ resource "aws_route_table" "web_route" {
   tags = {
     name = "routing rules for web server"
   }
+}
+
+resource "aws_subnet" "ws_subnet" {
+  vpc_id = aws_vpc.vpc_for_web.id
+  cidr_block = "10.0.100.0/24"
+  map_public_ip_on_launch = true
+
+
+  tags = {
+    name = "public subnet for web server"
+  }
+}
+
+resource "aws_route_table_association" "a" {
+  route_table_id = aws_route_table.web_route.id
+  subnet_id = aws_subnet.ws_subnet.id
 }
