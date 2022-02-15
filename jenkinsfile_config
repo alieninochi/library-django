@@ -22,6 +22,7 @@ pipeline {
                 dir('ansible') {
                     sh 'cat hosts'
                     sh 'ansible -i hosts all --private-key $ANSIBLE_KEY -m ping'
+                    sh 'ansible-playbook -i hosts --private-key $ANSIBLE_KEY servcfg.yml'
                 }
                 echo 'Done!'
             }
