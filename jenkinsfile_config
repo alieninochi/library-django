@@ -21,7 +21,7 @@ pipeline {
             steps {
                 dir('ansible') {
                     sh 'cat hosts'
-                    sh 'ansible -i hosts all --private-key $ANSIBLE_KEY -m ping'
+                    sh 'ansible -i hosts all -m ping'
                 }
                 echo 'Done!'
             }
