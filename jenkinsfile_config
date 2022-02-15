@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ANSIBLE_CONFIG=/var/lib/jenkins/workspace/ansible/ansible.cfg
+        ANSIBLE_CONFIG='/var/lib/jenkins/workspace/ansible/ansible.cfg'
     }
 
     stages {
