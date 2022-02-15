@@ -17,6 +17,7 @@ pipeline {
         stage('Ansible Config Servers') {
             steps {
                 dir('../ansible') {
+                    sh 'echo $IP_ADDR'
                     sh 'echo $IP_ADDR >> hosts'
                     sh 'export ANSIBLE_CONFIG=/var/lib/jenkins/workspace/ansible/ansible.cfg'
                     sh 'ansible -i hosts all -m ping'
