@@ -18,6 +18,7 @@ pipeline {
             steps {
                 dir('../ansible') {
                     sh 'echo $IP_ADDR >> hosts'
+                    sh 'export ANSIBLE_CONFIG=/home/alieninochi/project/ansible/ansible.cfg'
                     sh 'ansible -i hosts all -m ping'
                 }
                 echo 'Done!'
