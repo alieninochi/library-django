@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        ANSIBLE_CONFIG=/var/lib/jenkins/workspace/ansible/ansible.cfg
+    }
+
     stages {
         stage('Terraform Building Infrastructure') {
             steps {
@@ -8,8 +12,7 @@ pipeline {
                     sh 'ls -alt'
                     sh 'terraform init'
                     sh 'terraform apply -auto-approve'
-                    sh 'export IP_ADDR=$(terraform output | grep -E -o "([0-9]{1,3}[\\.]){3}[0-9]{1,3}")'
-                    sh 'echo $IP_ADDR'
+                    sh 'terraform output | grep -E -o "([0-9]{1,3}[\\.]){3}[0-9]{1,3}" >> ../ansible/hosts'
                 }
             }
         }
@@ -17,9 +20,7 @@ pipeline {
         stage('Ansible Config Servers') {
             steps {
                 dir('../ansible') {
-                    sh 'echo $IP_ADDR'
-                    sh 'echo $IP_ADDR >> hosts'
-                    sh 'export ANSIBLE_CONFIG=/var/lib/jenkins/workspace/ansible/ansible.cfg'
+                    sh 'cat hosts'
                     sh 'ansible -i hosts all -m ping'
                 }
                 echo 'Done!'
