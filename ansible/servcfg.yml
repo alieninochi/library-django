@@ -9,7 +9,7 @@
       update_cache: yes
 
   - name: add docker GPG key
-    apt-key:
+    apt_key:
       url: https://download.docker.com/linux/ubuntu/gpg
       state: present
 
