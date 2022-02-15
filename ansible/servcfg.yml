@@ -21,10 +21,10 @@
     apt: update_cache=yes name=docker-ce state=latest
 
   - name: install docker-ce-cli
-      apt: name=docker-ce state=latest
+    apt: name=docker-ce state=latest
 
   - name: install containerd.io
-      apt: name=docker-ce state=latest
+    apt: name=docker-ce state=latest
 
   - name: install docker package for python
     pip:
