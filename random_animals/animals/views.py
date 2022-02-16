@@ -4,7 +4,7 @@ import random
 import requests
 
 rand_offset = random.randint(0, 100)
-animal = 'parrot'
+animal = 'cats'
 giphy_url = ''.join([
     'https://api.giphy.com/v1/gifs/search?api_key=',
     '1Rx9LhhsLY73Sbx9wf8fkeifnVgNHpCi',
