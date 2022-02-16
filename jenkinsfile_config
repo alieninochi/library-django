@@ -44,7 +44,7 @@ pipeline {
         stage('Deploying app') {
             steps {
                 dir('ansible') {
-                    sh 'ansible-playbook -i hosts --private-key $ANSIBLE_KEY servcfg.yml'
+                    sh 'ansible-playbook -i hosts --private-key $ANSIBLE_KEY push_app.yml'
                 }
                 echo 'Done!'
             }
