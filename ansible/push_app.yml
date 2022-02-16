@@ -1,0 +1,4 @@
+...
+- name: Deploy app on production server
+  hosts: all
+  become: yes
