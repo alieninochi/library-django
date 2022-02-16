@@ -49,11 +49,11 @@ pipeline {
                 echo 'Done!'
             }
         }
+    }
 
-        post {
-            always {
-                archiveArtifacts artifacts: 'random_animals/*', onlyIfSuccessful: true
-            }
+    post {
+        always {
+            archiveArtifacts artifacts: 'random_animals/*', onlyIfSuccessful: true
         }
     }
 }
