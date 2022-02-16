@@ -32,6 +32,9 @@ pipeline {
         stage('Testing app') {
             steps {
                 dir('random_animals') {
+                    sh 'virtualenv venv'
+                    sh 'source ./venv/bin/activate'
+                    sh 'pip install -r requirements.txt'
                     sh 'python3 manage.py test'
                 }
                 echo 'Done!'
