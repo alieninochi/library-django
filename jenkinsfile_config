@@ -32,7 +32,7 @@ pipeline {
         stage('Testing app') {
             steps {
                 dir('random_animals') {
-                    python3 manage.py test
+                    sh 'python3 manage.py test'
                 }
                 echo 'Done!'
             }
