@@ -6,6 +6,18 @@ pipeline {
     }
 
     stages {
+        stage('Testing app') {
+            steps {
+                dir('random_animals') {
+                    sh 'virtualenv venv'
+                    sh 'source ./venv/bin/activate'
+                    sh 'pip install -r requirements.txt'
+                    sh 'python3 manage.py test'
+                }
+                echo 'Done!'
+            }
+        }
+
         stage('Terraform Building Infrastructure') {
             steps {
                 dir('terraform') {
@@ -24,18 +36,6 @@ pipeline {
                     sh 'cat hosts'
                     sh 'ansible -i hosts all --private-key $ANSIBLE_KEY -m ping'
                     sh 'ansible-playbook -i hosts --private-key $ANSIBLE_KEY servcfg.yml'
-                }
-                echo 'Done!'
-            }
-        }
-
-        stage('Testing app') {
-            steps {
-                dir('random_animals') {
-                    sh 'virtualenv venv'
-                    sh 'source ./venv/bin/activate'
-                    sh 'pip install -r requirements.txt'
-                    sh 'python3 manage.py test'
                 }
                 echo 'Done!'
             }
