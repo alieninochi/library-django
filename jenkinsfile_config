@@ -26,7 +26,7 @@ pipeline {
             steps {
                 dir('terraform') {
                     sh 'terraform init'
-                    sh 'terraform destroy -auto-approve'
+                    sh 'terraform apply -auto-approve'
                     sh 'terraform output | grep -E -o "([0-9]{1,3}[\\.]){3}[0-9]{1,3}" >> ../ansible/hosts'
                 }
                 echo 'Done!'
