@@ -5,6 +5,10 @@ pipeline {
         ANSIBLE_CONFIG='/var/lib/jenkins/workspace/ansible/ansible.cfg'
     }
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '15', artifactNumToKeepStr: '15'))
+    }
+
     stages {
         stage('Testing app') {
             steps {
@@ -21,9 +25,8 @@ pipeline {
         stage('Terraform Building Infrastructure') {
             steps {
                 dir('terraform') {
-                    sh 'cat ../ansible/hosts'
                     sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
+                    sh 'terraform destroy -auto-approve'
                     sh 'terraform output | grep -E -o "([0-9]{1,3}[\\.]){3}[0-9]{1,3}" >> ../ansible/hosts'
                 }
                 echo 'Done!'
