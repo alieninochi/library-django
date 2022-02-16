@@ -28,11 +28,8 @@
       group: ubuntu
       mode: 0644
 
-  - name: get server ip
-    command: "alias getip='wget -qO - eth0.me'"
-
   - name: add host to allowed in django app
-    command: "getip >> /home/ubuntu/random_animals/random_animals/settings.py"
+    command: "echo \"ALLOWED_HOSTS = ['$(wget -qO - eth0.me)']\" >> /home/ubuntu/random_animals/random_animals/settings.py"
 
   - name: create docker image
     command: "docker compose build"
