@@ -44,6 +44,8 @@ pipeline {
         stage('Deploying app') {
             steps {
                 dir('ansible') {
+                    sh 'echo "DEBUG = False"
+                    sh 'echo "ALLOWED_HOSTS = ['$(hosts | grep -E -o "([0-9]{1,3}[\\.]){3}[0-9]{1,3}")']" >> ../random_animals/random_animals/settings.py'
                     sh 'ansible-playbook -i hosts --private-key $ANSIBLE_KEY push_app.yml'
                 }
                 echo 'Done!'
@@ -53,7 +55,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'random_animals/*', onlyIfSuccessful: true
+            archiveArtifacts artifacts: 'random_animals/**/*.*', onlyIfSuccessful: true
         }
     }
 }
