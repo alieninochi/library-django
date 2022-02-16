@@ -26,10 +26,6 @@
   - name: install containerd.io
     apt: name=docker-ce state=latest
 
-  - name: install docker package for python
-    pip:
-      name: docker
-
   - name: check docker successful installation
     command: "docker --version"
 
