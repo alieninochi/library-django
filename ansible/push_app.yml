@@ -2,3 +2,34 @@
 - name: Deploy app on production server
   hosts: all
   become: yes
+
+  tasks:
+  - name: copy app to remote server
+    copy:
+      src: ../random_animals
+      dest: /home/ubuntu
+      owner: ubuntu
+      group: ubuntu
+      mode: 0644
+
+  - name: copy dockerfile to remote server
+    copy:
+      src: ../docker
+      dest: /home/ubuntu
+      owner: ubuntu
+      group: ubuntu
+      mode: 0644
+
+  - name: copy docker-compose file to remote server
+    copy:
+      src: ../docker-compose.yml
+      dest: /home/ubuntu
+      owner: ubuntu
+      group: ubuntu
+      mode: 0644
+
+  - name: create docker image
+    command: "docker compose build"
+
+  - name: run docker container
+    command: "docker compose up -d"

@@ -40,5 +40,21 @@ pipeline {
                 echo 'Done!'
             }
         }
+
+        stage('Deploying app') {
+            steps {
+                dir('ansible') {
+                    sh 'ansible-playbook -i hosts --private-key $ANSIBLE_KEY servcfg.yml'
+                }
+                echo 'Done!'
+            }
+        }
+
+        post {
+            always {
+                archiveArtifacts artifacts: 'random_animals/*', onlyIfSuccessful: true
+            }
+        }
+    }
     }
 }
