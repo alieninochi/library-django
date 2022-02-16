@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  nginx:
+    restart: always
+    image: nginx:latest
+    expose:
+      - 8080
+    ports:
+      - "80:8080"
+    volumes:
+      - ./random_animals/static:/srv/www/random_animals/static
+      - ./random_animals/media:/srv/www/random_animals/media
+      - ./random_animals/logs:/srv/www/random_animals/logs
+      - ./docker/nginx:/etc/nginx/conf.d
+    depends_on:
+      - python
+
+  python:
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/python/Dockerfile
+    volumes:
+      - ./random_animals:/srv/www/random_animals
+    expose:
+      - 8000
+    ports:
+      - 8000:8000
+    command: "gunicorn -c gunicorn.py random_animals.wsgi"
